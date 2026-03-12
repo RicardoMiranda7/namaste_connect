@@ -1,10 +1,14 @@
 import {Form, useNavigate} from "react-router";
 import {Button, Card, CardContent, Input} from "../components/ui";
 import {ChangeEvent, useState} from "react";
+import {format} from "date-fns"; // Standard for date formatting
+import {Calendar as CalendarIcon} from "lucide-react";
+import {CalendarPicker} from "../components/CalendarPicker.tsx";
 
 export function NewClass() {
   const navigate = useNavigate();
   const [preview, setPreview] = useState<string | null>(null);
+  const [date, setDate] = useState<Date>();
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -31,8 +35,18 @@ export function NewClass() {
               <Input name="description" placeholder="Description" required/>
 
               <div className="grid grid-cols-2 gap-4">
-                <Input name="date" type="date" required />
-                <Input name="time" type="time" required />
+                {/* Date Picker now inside the grid */}
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold">Date</label>
+                  <input type="hidden" name="date" value={date ? format(date, "yyyy-MM-dd") : ""} />
+                  <CalendarPicker value={date} onChange={setDate} />
+                </div>
+
+                {/* Time Input */}
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold">Time</label>
+                  <Input name="time" type="time" step="60" required />
+                </div>
               </div>
 
               <Input name="maxAttendees" type="number" placeholder="Max Attendees" required/>
