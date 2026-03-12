@@ -3,6 +3,7 @@ import {Calendar, LogOut, Menu, Users} from "lucide-react";
 import {useState} from "react";
 import {api} from "../services/mockApi";
 import {Button} from "./ui";
+import {ROUTES} from "../constants/routes.ts";
 
 export function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ export function Layout() {
 
   const handleLogout = async () => {
     await api.logout();
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
   return (
@@ -29,11 +30,11 @@ export function Layout() {
           <div className="h-full flex flex-col p-4">
             <div className="hidden md:block font-bold text-xl mb-8 px-2">Yoga Admin</div>
             <nav className="flex-1 space-y-2">
-              <NavLink to="/"
+              <NavLink to={ROUTES.DASHBOARD}
                        className={({isActive}) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ${isActive ? "bg-muted text-primary font-medium" : "text-muted-foreground hover:text-primary"}`}>
                 <Calendar className="h-4 w-4"/> Classes
               </NavLink>
-              <NavLink to="/attendees"
+              <NavLink to={ROUTES.ATTENDEES}
                        className={({isActive}) => `flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ${isActive ? "bg-muted text-primary font-medium" : "text-muted-foreground hover:text-primary"}`}>
                 <Users className="h-4 w-4"/> Attendees
               </NavLink>

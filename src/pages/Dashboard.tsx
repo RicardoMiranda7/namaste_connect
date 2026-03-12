@@ -1,6 +1,7 @@
 import { useLoaderData, Link } from "react-router";
 import { api, ClassSession } from "../services/mockApi";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui";
+import {ROUTES} from "../constants/routes.ts";
 
 export async function dashboardLoader() {
   const classes = await api.getClasses();
@@ -14,7 +15,7 @@ export function Dashboard() {
   const past = classes.filter(c => c.status === "completed" || c.status === "cancelled");
 
   const ClassCard = ({ c }: { c: ClassSession }) => (
-      <Link to={`/class/${c.id}`}>
+      <Link to={ROUTES.CLASS + c.id}>
         <Card className="hover:border-primary transition-colors cursor-pointer h-full">
           <CardHeader className="pb-2">
             <div className="flex justify-between items-start">

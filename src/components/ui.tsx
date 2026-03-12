@@ -1,4 +1,4 @@
-import {cn} from "../lib/utils"
+import {cn} from "../utils/utils"
 import {ButtonHTMLAttributes, forwardRef, HTMLAttributes, InputHTMLAttributes} from "react";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement> & {

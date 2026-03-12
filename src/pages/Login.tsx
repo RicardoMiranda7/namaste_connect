@@ -1,10 +1,11 @@
 import { Form, redirect } from "react-router";
 import { api } from "../services/mockApi";
 import { Button, Card, CardContent, CardHeader, CardTitle, Input } from "../components/ui";
+import {ROUTES} from "../constants/routes.ts";
 
 export async function loginAction() {
   await api.login();
-  return redirect("/");
+  return redirect(ROUTES.DASHBOARD);
 }
 
 export function Login() {
