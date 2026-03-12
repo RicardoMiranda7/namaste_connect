@@ -1,12 +1,8 @@
 import {Link, useLoaderData} from "react-router";
-import {api, ClassLesson} from "../services/mockApi";
-import {Card, CardContent, CardHeader, CardTitle} from "../components/ui";
+import {ClassLesson} from "../services/mockApi";
+import {Button, Card, CardContent, CardHeader, CardTitle} from "../components/ui";
 import {ROUTES} from "../constants/routes.ts";
-
-export async function dashboardLoader() {
-  const lessons = await api.getClasses();
-  return {lessons};
-}
+import {CSSProperties} from "react";
 
 export function Dashboard() {
   const {lessons} = useLoaderData() as { lessons: ClassLesson[] };
@@ -65,7 +61,25 @@ export function Dashboard() {
       <div className="space-y-12">
         {/* Upcoming Section */}
         <section>
-          <h2 className="text-3xl font-serif font-semibold mb-8 text-foreground">Upcoming Classes</h2>
+          <div className="flex items-center gap-4 mb-8">
+            <h2 className="text-3xl font-serif font-semibold text-foreground">Upcoming Classes</h2>
+
+            {/*
+            Responsive Button Positioning:
+            - Mobile (default): fixed to bottom-right, floating, high z-index
+            - md+: static (flows naturally next to the title)
+          */}
+            <Link viewTransition
+                  to={ROUTES.NEW_CLASS}
+                  className="fixed bottom-6 right-6 z-50 md:static transition-transform duration-100 active:scale-95 touch-manipulation"
+                  style={{viewTransitionName: 'new-class-button'} as CSSProperties}
+            >
+              <Button className="rounded-full md:rounded-md h-14 w-14 md:h-10 md:w-auto p-0 md:px-4">
+                <span className="hidden md:inline">+ New Class</span>
+                <span className="md:hidden text-2xl font-light">+</span>
+              </Button>
+            </Link>
+          </div>
           {upcoming.length === 0 ? (
               <p className="text-muted-foreground italic">No upcoming classes scheduled.</p>
           ) : (

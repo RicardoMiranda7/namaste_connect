@@ -5,10 +5,13 @@ import "./index.css";
 
 import {Layout} from "./components/Layout";
 import {Login, loginAction} from "./pages/Login";
-import {Dashboard, dashboardLoader} from "./pages/Dashboard";
-import {classAction, ClassDetails, classLoader} from "./pages/ClassDetails";
+import {Dashboard} from "./pages/Dashboard";
+import {ClassDetails} from "./pages/ClassDetails";
 import {api} from "./services/mockApi";
 import {ROUTES} from "./constants/routes.ts";
+import {NewClass} from "./pages/NewClass.tsx";
+import {classLoader, dashboardLoader} from "./loaders/loaders.ts";
+import {classAction, newClassAction} from "./loaders/actions.ts";
 
 const requireAuth = async () => {
   if (!api.isAuthenticated()) throw redirect(ROUTES.LOGIN);
@@ -39,6 +42,11 @@ const router = createBrowserRouter([
             element: <ClassDetails/>,
             loader: classLoader,
             action: classAction,
+          },
+          {
+            path: "class/new",
+            element: <NewClass/>,
+            action: newClassAction,
           },
           {
             path: "attendees",

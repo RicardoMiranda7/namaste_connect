@@ -1,30 +1,10 @@
-import {type ActionFunctionArgs, Form, useLoaderData} from "react-router";
-import {api, ClassLesson} from "../services/mockApi";
+import {Form, useLoaderData} from "react-router";
+import {ClassLesson} from "../services/mockApi";
 import {Button, Card, CardContent, CardHeader, CardTitle, Input} from "../components/ui";
-
-export async function classLoader({params}: any) {
-  const classData = await api.getClass(params.id);
-  if (!classData) throw new Response("Not Found", {status: 404});
-  return {classData};
-}
-
-export async function classAction({request, params}: ActionFunctionArgs) {
-  const formData = await request.formData();
-  const intent = formData.get("intent");
-
-  if (intent === "cancel_class") {
-    await api.cancelClass(params.id!);
-  } else if (intent === "add_attendee") {
-    await api.addAttendee(params.id!, formData.get("name") as string, formData.get("email") as string);
-  } else if (intent === "remove_attendee") {
-    await api.removeAttendee(params.id!, formData.get("attendeeId") as string);
-  }
-  return null;
-}
 
 export function ClassDetails() {
   const {classData} = useLoaderData() as { classData: ClassLesson };
-console.log(classData);
+
   return (
       <div className="max-w-4xl mx-auto space-y-8 pb-12">
         {/* Hero Image */}
