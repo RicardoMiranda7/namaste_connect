@@ -18,6 +18,12 @@ export async function classAction({request, params}: ActionFunctionArgs) {
 
 export async function newClassAction({request}: any) {
   const formData = await request.formData();
+  const imageFile = formData.get("image") as File;
+
+  // Create a local URL for the file to store in the mock data
+  const photoUrl = imageFile && imageFile.size > 0
+      ? URL.createObjectURL(imageFile)
+      : "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80";
 
   await api.addClass({
     title: formData.get("title") as string,
@@ -25,7 +31,7 @@ export async function newClassAction({request}: any) {
     date: formData.get("date") as string,
     time: formData.get("time") as string,
     maxAttendees: Number(formData.get("maxAttendees")),
-    photo: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80" // Placeholder
+    photo: photoUrl
   });
   return redirect(ROUTES.DASHBOARD);
 }

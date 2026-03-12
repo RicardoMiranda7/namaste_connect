@@ -1,39 +1,57 @@
-import { Form, redirect, useNavigate } from "react-router";
-import { api } from "../services/mockApi";
-import { Button, Input, Card, CardContent } from "../components/ui";
-import {ROUTES} from "../constants/routes.ts";
-
-export async function newClassAction({ request }: any) {
-  const formData = await request.formData();
-  await api.addClass({
-    title: formData.get("title") as string,
-    description: formData.get("description") as string,
-    date: formData.get("date") as string,
-    time: formData.get("time") as string,
-    maxAttendees: Number(formData.get("maxAttendees")),
-    photo: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80" // Placeholder
-  });
-  return redirect(ROUTES.DASHBOARD);
-}
+import {Form, useNavigate} from "react-router";
+import {Button, Card, CardContent, Input} from "../components/ui";
+import {ChangeEvent, useState} from "react";
 
 export function NewClass() {
   const navigate = useNavigate();
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Create temporary browser URL for the preview
+      setPreview(URL.createObjectURL(file));
+    }
+  }
+
+  const handleBack = () => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => navigate(-1));
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
       <div className="max-w-xl mx-auto py-8">
         <Card>
           <CardContent className="pt-6">
-            <Form method="post" className="space-y-4">
-              <Input name="title" placeholder="Class Title" required />
-              <Input name="description" placeholder="Description" required />
+            <Form method="post" encType="multipart/form-data" className="space-y-4">
+              <Input name="title" placeholder="Class Title" required/>
+              <Input name="description" placeholder="Description" required/>
+
               <div className="grid grid-cols-2 gap-4">
                 <Input name="date" type="date" required />
                 <Input name="time" type="time" required />
               </div>
-              <Input name="maxAttendees" type="number" placeholder="Max Attendees" required />
-              <Input type="file" accept="image/*" /> {/* Future integration point */}
+
+              <Input name="maxAttendees" type="number" placeholder="Max Attendees" required/>
+
+              <div className="space-y-2">
+                <label className="text-xs font-semibold">Class Photo</label>
+                <Input name="image" type="file" accept="image/*" onChange={handleImageChange}/>
+                {preview && (
+                    <div className="h-32 w-full overflow-hidden rounded-md border">
+                      <img src={preview} alt="Preview" className="w-full h-full object-cover"/>
+                    </div>
+                )}
+              </div>
+
               <div className="flex gap-4 pt-4">
-                <Button type="button" variant="outline" onClick={() => navigate(-1)} className="w-full">Cancel</Button>
-                <Button type="submit" className="w-full">Create Class</Button>
+                <Button type="button" variant="outline" onClick={handleBack}
+                        className="w-full transition-transform duration-100 active:scale-95">Cancel</Button>
+                <Button type="submit"
+                        className="w-full transition-transform duration-100 active:scale-95">Create Class</Button>
               </div>
             </Form>
           </CardContent>
