@@ -1,8 +1,7 @@
 import {Form, useNavigate} from "react-router";
-import {Button, Card, CardContent, Input} from "../components/ui";
+import {Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea} from "../components/ui";
 import {ChangeEvent, useState} from "react";
 import {format} from "date-fns"; // Standard for date formatting
-import {Calendar as CalendarIcon} from "lucide-react";
 import {CalendarPicker} from "../components/CalendarPicker.tsx";
 
 export function NewClass() {
@@ -29,23 +28,32 @@ export function NewClass() {
   return (
       <div className="max-w-xl mx-auto py-8">
         <Card>
+          <CardHeader>
+            <CardTitle className="text-center font-serif text-2xl text-foreground">
+              New Class
+            </CardTitle>
+            {/* A subtle decorative line to fit the boutique yoga aesthetic */}
+            <div className="w-12 h-px bg-emerald-800 mx-auto mt-2"/>
+          </CardHeader>
+
           <CardContent className="pt-6">
             <Form method="post" encType="multipart/form-data" className="space-y-4">
+
               <Input name="title" placeholder="Class Title" required/>
-              <Input name="description" placeholder="Description" required/>
+              <Textarea name="description" placeholder="Description" required/>
 
               <div className="grid grid-cols-2 gap-4">
-                {/* Date Picker now inside the grid */}
+                {/* Date Picker */}
                 <div className="space-y-1">
                   <label className="text-xs font-semibold">Date</label>
-                  <input type="hidden" name="date" value={date ? format(date, "yyyy-MM-dd") : ""} />
-                  <CalendarPicker value={date} onChange={setDate} />
+                  <input type="hidden" name="date" value={date ? format(date, "yyyy-MM-dd") : ""}/>
+                  <CalendarPicker value={date} onChange={setDate}/>
                 </div>
 
                 {/* Time Input */}
                 <div className="space-y-1">
                   <label className="text-xs font-semibold">Time</label>
-                  <Input name="time" type="time" step="60" required />
+                  <Input name="time" type="time" step="60" required/>
                 </div>
               </div>
 

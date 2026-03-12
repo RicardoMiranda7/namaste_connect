@@ -1,5 +1,5 @@
 import {cn} from "../utils/utils"
-import {ButtonHTMLAttributes, forwardRef, HTMLAttributes, InputHTMLAttributes} from "react";
+import {ButtonHTMLAttributes, forwardRef, HTMLAttributes, InputHTMLAttributes, TextareaHTMLAttributes} from "react";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "default" | "destructive" | "outline"
@@ -28,6 +28,22 @@ export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputE
     }
 )
 Input.displayName = "Input"
+
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
+    ({className, ...props}, ref) => {
+      return (
+          <textarea
+              className={cn(
+                  "flex min-h-[120px] w-full rounded-md border border-border bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50",
+                  className
+              )}
+              ref={ref}
+              {...props}
+          />
+      )
+    }
+)
+Textarea.displayName = "Textarea"
 
 export const Card = ({className, ...props}: HTMLAttributes<HTMLDivElement>) => (
     <div
