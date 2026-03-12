@@ -7,23 +7,27 @@ import "react-day-picker/dist/style.css";
 
 export function CalendarPicker({value, onChange}: { value?: Date; onChange: (date?: Date) => void }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const closeCalendar = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsClosing(false);
+    }, 200); // Matches the 0.2s animation duration
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      // If the click is outside the container, close the calendar
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        if (isOpen) closeCalendar();
       }
     }
 
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [containerRef]);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
 
   return (
       <div className="relative" ref={containerRef}>
@@ -37,13 +41,14 @@ export function CalendarPicker({value, onChange}: { value?: Date; onChange: (dat
         </Button>
 
         {isOpen && (
-            <div className="absolute top-12 left-0 z-50 bg-white border border-stone-200 shadow-xl rounded-xl p-4">
+            <div
+                className={`absolute top-12 left-0 z-50 bg-white border border-stone-200 shadow-xl rounded-xl p-4 ${isClosing ? 'animate-fade-out' : 'animate-in fade-in zoom-in duration-200'}`}>
               <DayPicker
                   mode="single"
                   selected={value}
                   onSelect={(date) => {
                     onChange(date);
-                    setIsOpen(false);
+                    closeCalendar();
                   }}
                   className="m-0"
                   components={{
