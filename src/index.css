@@ -592,14 +592,12 @@ input, button, .rdp-day {
 }
 
 @media (max-width: 900px) {
-  .twenty-wrapper {
-    padding: 2.7rem 1rem;
+  .aerial-bg {
+    background-size: auto 100%;
   }
 
-  .twenty-style2,
-  .twenty-style3,
-  .twenty-cta {
-    background-attachment: scroll, scroll, scroll;
+  .twenty-wrapper {
+    padding: 2.7rem 1rem;
   }
 
   .twenty-split {
