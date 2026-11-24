@@ -612,6 +612,7 @@ input, button, .rdp-day {
   .twenty-style3,
   .twenty-cta {
     background: none;
+    overflow: visible;
   }
 
   .twenty-dark-bg {
@@ -625,10 +626,9 @@ input, button, .rdp-day {
         radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
         linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8)),
         url("./assets/img/1.png");
-    background-size: auto, auto, cover;
+    background-size: 100% 100%, 100% 100%, cover;
     background-position: center, center, center;
     background-repeat: no-repeat, no-repeat, no-repeat;
-    transform: translateZ(0);
     pointer-events: none;
   }
 }
@@ -652,33 +652,6 @@ input, button, .rdp-day {
 
   .twenty-cta-contacts {
     grid-template-columns: 1fr;
-  }
-}
-
-/* iOS browsers (Safari/Firefox/Chrome on iPhone) often ignore section-level background-attachment: fixed */
-@supports (-webkit-touch-callout: none) {
-  .twenty-style2,
-  .twenty-style3,
-  .twenty-cta {
-    background-attachment: scroll, scroll;
-  }
-
-  .twenty-style2 {
-    background-image:
-        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.18), transparent 52%),
-        linear-gradient(140deg, hsla(170, 30%, 22%, 0.75), hsla(210, 35%, 28%, 0.78));
-  }
-
-  .twenty-style3 {
-    background-image:
-        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.14), transparent 52%),
-        linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8));
-  }
-
-  .twenty-cta {
-    background-image:
-        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
-        linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8));
   }
 }
 
