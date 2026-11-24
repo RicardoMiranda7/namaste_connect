@@ -5,7 +5,7 @@ import {ChevronLeft, ChevronRight} from "lucide-react";
 import {Button} from "./ui";
 import "react-day-picker/dist/style.css";
 
-export function CalendarPicker({value, onChange}: { value?: Date; onChange: (date?: Date) => void }) {
+export function CalendarPicker({value, onChange}: Readonly<{ value?: Date; onChange: (date?: Date) => void }>) {
   const [isOpen, setIsOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);

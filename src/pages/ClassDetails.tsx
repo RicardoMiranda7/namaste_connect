@@ -1,9 +1,20 @@
 import {Form, useLoaderData} from "react-router";
 import {ClassLesson} from "../services/mockApi";
-import {Button, Card, CardContent, CardHeader, CardTitle, Input} from "../components/ui";
+import {Button, Card, CardContent, CardHeader, CardTitle, Input, Textarea} from "../components/ui";
+import {ROUTES} from "../constants/routes.ts";
+import {useState} from "react";
 
 export function ClassDetails() {
   const {classData} = useLoaderData() as { classData: ClassLesson };
+  const publicUrl = `${ROUTES.PUBLIC_CLASS}${classData.id}`;
+  const shareUrl = typeof window !== "undefined" ? `${window.location.origin}${publicUrl}` : publicUrl;
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText(shareUrl);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1500);
+  };
 
   return (
       <div className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -40,20 +51,61 @@ export function ClassDetails() {
             </p>
           </div>
 
-          {/* Actions */}
-          {classData.status === "scheduled" && (
-              <Form method="post" className="shrink-0 w-full md:w-auto">
-                <input type="hidden" name="intent" value="cancel_class"/>
-                <Button variant="destructive" type="submit" className="w-full md:w-auto">
-                  Cancel Class
-                </Button>
-              </Form>
-          )}
+          <div className="shrink-0 w-full md:w-80 space-y-3">
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-serif text-xl">Public Class Link</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  <Input readOnly value={shareUrl}/>
+                  <Button type="button" variant="outline" className="w-full" onClick={handleCopyLink}>
+                    {copied ? "Copied" : "Copy Link"}
+                  </Button>
+                  <p className="text-xs text-muted-foreground">
+                    Share this URL so users can view class details.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {classData.status === "scheduled" && (
+                <Form method="post" className="shrink-0 w-full md:w-auto">
+                  <input type="hidden" name="intent" value="cancel_class"/>
+                  <Button variant="destructive" type="submit" className="w-full md:w-auto">
+                    Cancel Session
+                  </Button>
+                </Form>
+            )}
+          </div>
         </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-serif text-xl">Edit Session</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Form method="post" encType="multipart/form-data" className="space-y-4">
+              <input type="hidden" name="intent" value="update_session"/>
+              <input type="hidden" name="existingPhoto" value={classData.photo}/>
+              <Input name="title" placeholder="Class Title" required defaultValue={classData.title}/>
+              <div className="grid grid-cols-2 gap-4">
+                <Input name="date" type="date" required defaultValue={classData.date}/>
+                <Input name="time" type="time" step="60" required defaultValue={classData.time}/>
+              </div>
+              <Input name="maxAttendees" type="number" required defaultValue={classData.maxAttendees}/>
+              <Textarea name="description" placeholder="Description" required defaultValue={classData.description}/>
+              <div className="space-y-2">
+                <label className="text-xs font-semibold">Class Photo</label>
+                <Input name="image" type="file" accept="image/*"/>
+              </div>
+              <Button type="submit">Save Changes</Button>
+            </Form>
+          </CardContent>
+        </Card>
 
         {/* Management Cards */}
         <div className="grid gap-6 md:grid-cols-2 pt-4">
-          {/* Add Attendee Card */}
           <Card>
             <CardHeader>
               <CardTitle className="font-serif text-xl">Add Attendee</CardTitle>
@@ -71,7 +123,6 @@ export function ClassDetails() {
                     name="email"
                     type="email"
                     placeholder="Email Address"
-                    required
                     disabled={classData.status !== "scheduled"}
                 />
                 <Button
@@ -102,7 +153,7 @@ export function ClassDetails() {
                             className="flex justify-between items-center border-b border-border pb-3 last:border-0 last:pb-0">
                           <div className="text-sm">
                             <p className="font-medium">{a.name}</p>
-                            <p className="text-muted-foreground">{a.email}</p>
+                            {a.email && <p className="text-muted-foreground">{a.email}</p>}
                           </div>
                           <Form method="post">
                             <input type="hidden" name="intent" value="remove_attendee"/>

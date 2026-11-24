@@ -29,8 +29,8 @@ export function NewClass() {
       <div className="max-w-xl mx-auto py-8">
         <Card>
           <CardHeader>
-            <CardTitle className="text-center font-serif text-2xl text-foreground">
-              New Class
+              <CardTitle className="text-center font-serif text-2xl text-foreground">
+              New Session
             </CardTitle>
             {/* A subtle decorative line to fit the boutique yoga aesthetic */}
             <div className="w-12 h-px bg-emerald-800 mx-auto mt-2"/>
@@ -73,7 +73,7 @@ export function NewClass() {
                 <Button type="button" variant="outline" onClick={handleBack}
                         className="w-full transition-transform duration-100 active:scale-95">Cancel</Button>
                 <Button type="submit"
-                        className="w-full transition-transform duration-100 active:scale-95">Create Class</Button>
+                  className="w-full transition-transform duration-100 active:scale-95">Create Session</Button>
               </div>
             </Form>
           </CardContent>

@@ -1,11 +1,10 @@
 import {ClassLesson} from "../services/mockApi.ts";
-import {ROUTES} from "../constants/routes.ts";
 import {Link} from "react-router";
 import {Card, CardContent, CardHeader, CardTitle} from "./ui.tsx";
 
-export default function ClassCard({lesson}: { lesson: ClassLesson }) {
+export default function ClassCard({lesson, to}: { lesson: ClassLesson; to: string }) {
   return (
-      <Link to={ROUTES.CLASS + lesson.id} className="group block h-full">
+      <Link to={to + lesson.id} className="group block h-full">
         <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg border-border/60">
           {/* Photo at the top */}
           <div className="h-48 w-full overflow-hidden bg-muted">

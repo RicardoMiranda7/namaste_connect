@@ -4,6 +4,7 @@ import {useState} from "react";
 import {api} from "../services/mockApi";
 import {Button} from "./ui";
 import {ROUTES} from "../constants/routes.ts";
+import {BRAND} from "../constants/brand.ts";
 
 export function Layout() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,14 +21,14 @@ export function Layout() {
 
   const handleLogout = async () => {
     await api.logout();
-    navigate(ROUTES.LOGIN);
+    navigate(ROUTES.ADMIN_LOGIN);
   };
 
   return (
       <div className="flex h-screen w-full bg-muted/20 flex-col md:flex-row">
         {/* Mobile Header */}
         <div className="md:hidden flex items-center justify-between p-4 border-b border-border bg-background z-40">
-          <span className="font-bold text-lg">Yoga Admin</span>
+          <span className="font-bold text-lg">{BRAND.adminTitle}</span>
           <Button variant="outline" onClick={() => setIsMobileMenuOpen(true)}>
             <Menu className="h-5 w-5"/>
           </Button>
@@ -59,7 +60,7 @@ export function Layout() {
             </div>
 
             {/* Desktop Title (Only visible on desktop) */}
-            <div className="hidden md:block font-bold text-xl mb-8 px-2">Yoga Admin</div>
+            <div className="hidden md:block font-bold text-xl mb-8 px-2">{BRAND.adminTitle}</div>
 
             <nav className="flex-1 space-y-2">
               <NavLink to={ROUTES.DASHBOARD}

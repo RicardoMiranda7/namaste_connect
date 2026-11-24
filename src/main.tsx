@@ -12,23 +12,35 @@ import {ROUTES} from "./constants/routes.ts";
 import {NewClass} from "./pages/NewClass.tsx";
 import {classLoader, dashboardLoader} from "./loaders/loaders.ts";
 import {classAction, newClassAction} from "./loaders/actions.ts";
+import {Home} from "./pages/Home";
+import {PublicClass} from "./pages/PublicClass";
 
 const requireAuth = async () => {
-  if (!api.isAuthenticated()) throw redirect(ROUTES.LOGIN);
+  if (!api.isAuthenticated()) throw redirect(ROUTES.ADMIN_LOGIN);
   return null;
 };
 
 const router = createBrowserRouter([
   {
-    // no component, just a path
     path: "/namaste_connect",
     children: [
       {
-        path: "login",
+        index: true,
+        element: <Home/>,
+        loader: dashboardLoader,
+      },
+      {
+        path: "class/:id",
+        element: <PublicClass/>,
+        loader: classLoader,
+      },
+      {
+        path: "admin/login",
         element: <Login/>,
         action: loginAction,
       },
       {
+        path: "admin",
         element: <Layout/>,
         loader: requireAuth,
         children: [
