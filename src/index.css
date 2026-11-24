@@ -362,6 +362,9 @@ input, button, .rdp-day {
 
 .twenty-special {
   text-align: center;
+}
+
+.twenty-special .container {
   padding: 4.4rem 1rem 3.3rem;
 }
 
@@ -597,39 +600,50 @@ input, button, .rdp-day {
   margin-top: 0.22rem;
 }
 
-.twenty-dark-bg {
-  display: none;
-}
-
-.twenty-dark-inner {
-  position: relative;
-  z-index: 1;
-}
-
-/* iOS browsers (including Firefox iOS) often ignore fixed backgrounds on sections. */
+/* iOS WebKit ignores background-attachment: fixed and can drop the image entirely.
+   A viewport-fixed layer behind the page restores the scroll-over photo.
+   Opaque sections cover that layer so the white blocks stay solid. */
 @supports (-webkit-touch-callout: none) {
-  .twenty-style2,
-  .twenty-style3,
-  .twenty-cta {
-    background: none;
-    overflow: visible;
+  .aerial-page {
+    isolation: isolate;
   }
 
-  .twenty-dark-bg {
-    display: block;
-    position: sticky;
+  .aerial-page::before {
+    content: "";
+    position: fixed;
     top: 0;
-    height: 100vh;
-    margin-bottom: -100vh;
+    right: 0;
+    bottom: 0;
+    left: 0;
     z-index: 0;
-    background:
+    pointer-events: none;
+    background-color: hsl(200, 30%, 24%);
+    background-image:
         radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
         linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8)),
         url("./assets/img/1.png");
-    background-size: 100% 100%, 100% 100%, cover;
+    background-size: auto, auto, cover;
     background-position: center, center, center;
-    background-repeat: no-repeat, no-repeat, no-repeat;
-    pointer-events: none;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+  }
+
+  .aerial-hero,
+  .twenty-main {
+    position: relative;
+    z-index: 1;
+  }
+
+  .twenty-special,
+  .twenty-style1,
+  .twenty-style4 {
+    background: hsl(var(--background));
+  }
+
+  .twenty-style2,
+  .twenty-style3,
+  .twenty-cta {
+    background: transparent;
   }
 }
 

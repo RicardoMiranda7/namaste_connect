@@ -37,17 +37,19 @@ export function Home() {
         </section>
 
         <article className="twenty-main">
-          <header className="twenty-special container">
-            <span className="twenty-special-icon" aria-hidden="true"><Sparkles size={28}/></span>
-            <h2>
-              Professional training with <strong>{BRAND.founder}</strong>
-              <br/>
-              at Reformer Timisoara
-            </h2>
-            <p>
-              This page presents Iulia as an independent trainer who teaches Yoga Pilates, Pilates Reformer,
-              Body Sculpting, and mobility-focused sessions inside Reformer Timisoara.
-            </p>
+          <header className="twenty-special">
+            <div className="container">
+              <span className="twenty-special-icon" aria-hidden="true"><Sparkles size={28}/></span>
+              <h2>
+                Professional training with <strong>{BRAND.founder}</strong>
+                <br/>
+                at Reformer Timisoara
+              </h2>
+              <p>
+                This page presents Iulia as an independent trainer who teaches Yoga Pilates, Pilates Reformer,
+                Body Sculpting, and mobility-focused sessions inside Reformer Timisoara.
+              </p>
+            </div>
           </header>
 
           <section className="twenty-wrapper twenty-style2">
