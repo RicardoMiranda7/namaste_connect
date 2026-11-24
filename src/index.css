@@ -174,6 +174,17 @@ input, button, .rdp-day {
 
 .aerial-page {
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+}
+
+.aerial-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("./assets/img/1.png") center / cover no-repeat;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .aerial-hero {
@@ -315,6 +326,8 @@ input, button, .rdp-day {
 }
 
 .twenty-style2 {
+  position: relative;
+  overflow: hidden;
   background:
       radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.18), transparent 52%),
       linear-gradient(140deg, hsla(170, 30%, 22%, 0.75), hsla(210, 35%, 28%, 0.78)),
@@ -334,6 +347,8 @@ input, button, .rdp-day {
 }
 
 .twenty-style3 {
+  position: relative;
+  overflow: hidden;
   background:
       radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.14), transparent 52%),
       linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8)),
@@ -491,6 +506,8 @@ input, button, .rdp-day {
 }
 
 .twenty-cta {
+  position: relative;
+  overflow: hidden;
   background:
       radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
       linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8)),
@@ -591,6 +608,42 @@ input, button, .rdp-day {
   margin-top: 0.22rem;
 }
 
+.twenty-dark-bg {
+  display: none;
+}
+
+.twenty-dark-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* iOS browsers (including Firefox iOS) often ignore fixed backgrounds on sections. */
+@supports (-webkit-touch-callout: none) {
+  .twenty-style2,
+  .twenty-style3,
+  .twenty-cta {
+    background: none;
+  }
+
+  .twenty-dark-bg {
+    display: block;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    margin-bottom: -100vh;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
+        linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8)),
+        url("./assets/img/1.png");
+    background-size: auto, auto, cover;
+    background-position: center, center, center;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    transform: translateZ(0);
+    pointer-events: none;
+  }
+}
+
 @media (max-width: 900px) {
   .aerial-bg {
     background-size: auto 100%;
@@ -610,6 +663,33 @@ input, button, .rdp-day {
 
   .twenty-cta-contacts {
     grid-template-columns: 1fr;
+  }
+}
+
+/* iOS browsers (Safari/Firefox/Chrome on iPhone) often ignore section-level background-attachment: fixed */
+@supports (-webkit-touch-callout: none) {
+  .twenty-style2,
+  .twenty-style3,
+  .twenty-cta {
+    background-attachment: scroll, scroll;
+  }
+
+  .twenty-style2 {
+    background-image:
+        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.18), transparent 52%),
+        linear-gradient(140deg, hsla(170, 30%, 22%, 0.75), hsla(210, 35%, 28%, 0.78));
+  }
+
+  .twenty-style3 {
+    background-image:
+        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.14), transparent 52%),
+        linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8));
+  }
+
+  .twenty-cta {
+    background-image:
+        radial-gradient(circle at 50% 18%, hsla(0, 0%, 100%, 0.16), transparent 52%),
+        linear-gradient(140deg, hsla(170, 30%, 22%, 0.76), hsla(210, 35%, 28%, 0.8));
   }
 }
 
